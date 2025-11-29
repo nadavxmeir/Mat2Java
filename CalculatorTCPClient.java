@@ -7,25 +7,23 @@ public class CalculatorTCPClient {
         int port = 9090; 
     
         try (Socket socket = new Socket(serverAddress, port);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
-    
-        System.out.println("Connected to calculator server at " + serverAddress + ":" + port);
-        String expression;
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
+            String expression;
     
         while (true) {
-            System.out.print("Enter expression (or 'exit' to quit): ");
+            System.out.print("Enter expression (num op num) or 'exit' to exit: ");
             expression = userInput.readLine();
             out.println(expression);
     
             if (expression.trim().equalsIgnoreCase("exit")) {
-            System.out.println("Goodbye!");
+            System.out.println("Client close.");
             break;
             }
     
             String response = in.readLine();
-            System.out.println("Result: " + response);
+            System.out.println(expression + " = " + response);
         }
         } catch (IOException e) {
         System.err.println("Error communicating with server: " + e.getMessage());

@@ -6,7 +6,7 @@ public class CalculatorTCPServer {
   public static void main(String[] args) {
     int port = 9090;
     try (ServerSocket serverSocket = new ServerSocket(port)) {
-      System.out.println("Calculator TCP Server is running on port: " + port);
+      System.out.println("Server is listening on port " + port + "...");
       try (Socket clientSocket = serverSocket.accept()) {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -16,13 +16,13 @@ public class CalculatorTCPServer {
 
         while ((expression = in.readLine()) != null) {
           if(expression.trim().equalsIgnoreCase("exit")) {
-            System.out.println("Goodbye!");
+            System.out.println("Client requested to close connection.");
+            System.out.println("Client disconnected.");
             break;
           }
           System.out.println("Received expression: " + expression); 
           String resultString = calculateExpression(expression);
           out.println(resultString);
-          System.out.println("Sent response: " + resultString);
         }
       } catch (IOException e) {
           System.err.println("Error communicating with client or connection dropped: " + e.getMessage());
@@ -34,7 +34,7 @@ public class CalculatorTCPServer {
   public static String calculateExpression(String expression) {
     String[] parts = expression.split(" ");
     if (parts.length != 3) {
-      return "Error: Invalid expression format. Use: operand1 operator operand2";
+      return "Error: Invalid expression";
     }
     try {
       double operand1 = Double.parseDouble(parts[0]);
