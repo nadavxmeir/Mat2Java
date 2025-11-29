@@ -36,7 +36,6 @@ public class QuoteUDPServer {
                 else if(message.equalsIgnoreCase("exit")) {
                     System.out.println("Request received: " + message);
                     System.out.println("Server Shutting down.");
-                    socket.close();
                     break;
                 }
                 else {
@@ -47,14 +46,16 @@ public class QuoteUDPServer {
                     DatagramPacket response =
                             new DatagramPacket(responseData, responseData.length,
                                     receivePacket.getAddress(), receivePacket.getPort());
-
                     socket.send(response);
                 } 
             } 
 
-
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            } 
         }
     }
 }

@@ -27,8 +27,10 @@ public class CalculatorTCPServer {
       } catch (IOException e) {
           System.err.println("Error communicating with client or connection dropped: " + e.getMessage());
       }
+      
     } catch (Exception e) {
-        System.err.println("Could not start server on port " + port + ". Is another program using this port? " + e.getMessage());    }
+        System.err.println("Could not start server on port " + port + ". Is another program using this port? " + e.getMessage());    
+    }
     
   }
   public static String calculateExpression(String expression) {
@@ -63,7 +65,7 @@ public class CalculatorTCPServer {
       }
       return String.valueOf(result);
     } catch (NumberFormatException e) {
-      return "Error: Invalid expression";
+        return "Error: Invalid expression";
     }
   }
 }

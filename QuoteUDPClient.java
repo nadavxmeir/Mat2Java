@@ -39,7 +39,5 @@ public class QuoteUDPClient {
             } 
             else System.out.println("Quote received: " + quote + "\n");
             }
-
-        socket.close();
     }
 }
